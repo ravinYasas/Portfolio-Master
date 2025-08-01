@@ -11,7 +11,6 @@ import { useWindowSize } from '~/hooks';
 import { Suspense, lazy, useState } from 'react';
 import { cssProps, media } from '~/utils/style';
 import { useHydrated } from '~/hooks/useHydrated';
-import katakana from './katakana.svg';
 import styles from './project-summary.module.css';
 
 const Model = lazy(() =>
@@ -48,19 +47,8 @@ export function ProjectSummary({
   }
 
   function renderKatakana(device, visible) {
-    return (
-      <svg
-        type="project"
-        data-visible={visible && modelLoaded}
-        data-light={theme === 'light'}
-        style={cssProps({ opacity: svgOpacity })}
-        className={styles.svg}
-        data-device={device}
-        viewBox="0 0 751 136"
-      >
-        <use href={`${katakana}#katakana-project`} />
-      </svg>
-    );
+    // Japanese katakana removed - return null to not render anything
+    return null;
   }
 
   function renderDetails(visible) {

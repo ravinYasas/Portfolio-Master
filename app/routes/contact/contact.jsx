@@ -31,6 +31,12 @@ const MAX_MESSAGE_LENGTH = 4096;
 const EMAIL_PATTERN = /(.+)@(.+){2,}\.(.+){2,}/;
 
 export async function action({ context, request }) {
+  // In development, skip email sending if AWS credentials are not available
+  if (!context?.cloudflare?.env?.AWS_ACCESS_KEY_ID) {
+    console.log('Development mode: Email would be sent here');
+    return json({ success: true });
+  }
+
   const ses = new SESClient({
     region: 'us-east-1',
     credentials: {

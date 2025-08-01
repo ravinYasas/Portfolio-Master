@@ -19,14 +19,19 @@ export default defineConfig({
   server: {
     port: 7777,
   },
+  ssr: {
+    noExternal: ["react-dom/server"]
+  },
   plugins: [
     mdx({
       rehypePlugins: [[rehypeImgSize, { dir: 'public' }], rehypeSlug, rehypePrism],
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       providerImportSource: '@mdx-js/react',
     }),
-    remixCloudflareDevProxy(),
+    // remixCloudflareDevProxy(), // Temporarily disabled due to compatibility date issue
     remix({
+      serverPlatform: "node",
+      serverEntryPoint: "./app/entry.server.jsx",
       routes(defineRoutes) {
         return defineRoutes(route => {
           route('/', 'routes/home/route.js', { index: true });
